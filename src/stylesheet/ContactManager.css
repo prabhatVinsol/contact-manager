@@ -59,3 +59,12 @@
 .p{
     color: red;
 }
+.Search {
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    overflow-y: scroll;
+    margin: 10px 20px;
+    background-color: #e9e8fd;
+    text-align: left;
+}
