@@ -21,7 +21,7 @@ function FormInputComp(props) {
           <p className="p">
             {field}
             {' '}
-            is empty
+            {value === '' ? 'is empty.' : 'is invalid.'}
           </p>
         )}
       </div>

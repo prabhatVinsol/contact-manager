@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import React, { useState } from 'react';
 import FormInputComp from './FormInputComp';
 import '../stylesheet/ContactManager.css';
+import isEmailValid from '../utilities/Helper';
 
 function ContactForm(props) {
   const { addContact } = props;
@@ -55,6 +56,9 @@ function ContactForm(props) {
       setLastNameError(true);
     }
     if (email === '') {
+      error = true;
+      setEmailError(true);
+    } else if (!isEmailValid(email)) {
       error = true;
       setEmailError(true);
     }
