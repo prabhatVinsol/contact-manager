@@ -1,18 +1,22 @@
 import React from 'react';
-import user from '../imageResources/User.png';
+import userImage from '../imageResources/User.png';
 
 function Contact(props) {
   const { contact, removeContact } = props;
+  const handleImageLoadFail = (e) => {
+    e.target.onError = null;
+    e.target.src = userImage;
+  };
   return (
     <div className="Contact">
-      <img src={user} className="ContactImage" alt="logo" />
+      <img src={userImage} className="ContactImage" alt="logo" onError={handleImageLoadFail} />
       <div className="ContactName">
         {contact.firstName}
         {' '}
         {contact.lastName}
       </div>
       <div className="ContactName">
-        {contact.email}
+        {contact.mailTo}
       </div>
       <button
         type="button"

@@ -21,7 +21,7 @@ function ContactManager() {
     }
     return contactList.filter((contact) => (contact.firstName.includes(searchText)
     || (contact.lastName.includes(searchText)) || (
-      contact.email.includes(searchText))));
+      contact.mailTo.includes(searchText))));
   };
   return (
     <div>

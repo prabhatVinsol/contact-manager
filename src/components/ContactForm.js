@@ -5,41 +5,48 @@ import FormInputComp from './FormInputComp';
 import '../stylesheet/ContactManager.css';
 import isEmailValid from '../utilities/Helper';
 
-function ContactForm(props) {
-  const { addContact } = props;
+function ContactForm({ addContact }) {
   const firstNameField = 'First Name';
   const lastNameField = 'Last Name';
   const emailField = 'Email';
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const getFormValue = (firstName = '', lastName = '', mailTo = '') => ({
+    firstName,
+    lastName,
+    mailTo,
+  });
 
+  const [formValue, setFormValue] = useState(getFormValue());
   const [isFirstNameEmpty, setFirstNameError] = useState(false);
   const [isLastNameEmpty, setLastNameError] = useState(false);
   const [isEmailEmpty, setEmailError] = useState(false);
 
   const handleInputChange = (fieldName, value) => {
     if (fieldName === firstNameField) {
-      setFirstName(value);
+      setFormValue({
+        ...formValue,
+        firstName: value,
+      });
     } else if (fieldName === lastNameField) {
-      setLastName(value);
+      setFormValue({
+        ...formValue,
+        lastName: value,
+      });
     } else if (fieldName === emailField) {
-      setEmail(value);
+      setFormValue({
+        ...formValue,
+        mailTo: value,
+      });
     }
   };
   const updateContactList = () => {
     const uniqueId = uuid();
     const contact = {
-      firstName,
-      lastName,
-      email,
+      ...formValue,
       id: uniqueId.slice(0, 8),
     };
     addContact(contact);
-    setFirstName('');
-    setLastName('');
-    setEmail('');
+    setFormValue(getFormValue());
     setFirstNameError(false);
     setLastNameError(false);
     setEmailError(false);
@@ -47,18 +54,18 @@ function ContactForm(props) {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     let error = false;
-    if (firstName === '') {
+    if (formValue.firstName === '') {
       error = true;
       setFirstNameError(true);
     }
-    if (lastName === '') {
+    if (formValue.lastName === '') {
       error = true;
       setLastNameError(true);
     }
-    if (email === '') {
+    if (formValue.mailTo === '') {
       error = true;
       setEmailError(true);
-    } else if (!isEmailValid(email)) {
+    } else if (!isEmailValid(formValue.mailTo)) {
       error = true;
       setEmailError(true);
     }
@@ -71,19 +78,19 @@ function ContactForm(props) {
       <form onSubmit={handleOnSubmit}>
         <FormInputComp
           field={firstNameField}
-          value={firstName}
+          value={formValue.firstName}
           handleChange={handleInputChange}
           isEmptyError={isFirstNameEmpty}
         />
         <FormInputComp
           field={lastNameField}
-          value={lastName}
+          value={formValue.lastName}
           handleChange={handleInputChange}
           isEmptyError={isLastNameEmpty}
         />
         <FormInputComp
           field={emailField}
-          value={email}
+          value={formValue.mailTo}
           handleChange={handleInputChange}
           isEmptyError={isEmailEmpty}
         />
