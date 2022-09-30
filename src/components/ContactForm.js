@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { v4 as uuid } from 'uuid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormInputComp from './FormInputComp';
 import '../stylesheet/ContactManager.css';
-import isEmailValid from '../utilities/Helper';
+import { checkEmptyValidEmailError, checkForEmptyError } from '../utilities/Helper';
 
 function ContactForm({ addContact }) {
   const firstNameField = 'First Name';
@@ -16,11 +16,14 @@ function ContactForm({ addContact }) {
     mailTo,
   });
 
-  const [formValue, setFormValue] = useState(getFormValue());
-  const [isFirstNameEmpty, setFirstNameError] = useState(false);
-  const [isLastNameEmpty, setLastNameError] = useState(false);
-  const [isEmailEmpty, setEmailError] = useState(false);
+  const getFormError = () => ({
+    firstName: [],
+    lastName: [],
+    mailTo: [],
+  });
 
+  const [formValue, setFormValue] = useState(getFormValue());
+  const [formError, setformError] = useState(getFormError());
   const handleInputChange = (fieldName, value) => {
     if (fieldName === firstNameField) {
       setFormValue({
@@ -47,31 +50,25 @@ function ContactForm({ addContact }) {
     };
     addContact(contact);
     setFormValue(getFormValue());
-    setFirstNameError(false);
-    setLastNameError(false);
-    setEmailError(false);
+    setformError(getFormError());
   };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    let error = false;
-    if (formValue.firstName === '') {
-      error = true;
-      setFirstNameError(true);
-    }
-    if (formValue.lastName === '') {
-      error = true;
-      setLastNameError(true);
-    }
-    if (formValue.mailTo === '') {
-      error = true;
-      setEmailError(true);
-    } else if (!isEmailValid(formValue.mailTo)) {
-      error = true;
-      setEmailError(true);
-    }
-    if (error) return;
-    updateContactList();
+    setformError({
+      firstName: checkForEmptyError(formValue.firstName),
+      lastName: checkForEmptyError(formValue.lastName),
+      mailTo: checkEmptyValidEmailError(formValue.mailTo),
+    });
   };
+
+  useEffect(() => {
+    if ((Number(formError.firstName.length) === 0)
+    && (Number(formError.lastName.length) === 0)
+    && (Number(formError.mailTo) === 0) && (formValue.firstName !== '')) {
+      updateContactList();
+    }
+  }, [formError]);
 
   return (
     <div className="FormContainer">
@@ -80,19 +77,19 @@ function ContactForm({ addContact }) {
           field={firstNameField}
           value={formValue.firstName}
           handleChange={handleInputChange}
-          isEmptyError={isFirstNameEmpty}
+          isEmptyError={formError.firstName.length > 0}
         />
         <FormInputComp
           field={lastNameField}
           value={formValue.lastName}
           handleChange={handleInputChange}
-          isEmptyError={isLastNameEmpty}
+          isEmptyError={formError.lastName.length > 0}
         />
         <FormInputComp
           field={emailField}
           value={formValue.mailTo}
           handleChange={handleInputChange}
-          isEmptyError={isEmailEmpty}
+          isEmptyError={formError.mailTo.length > 0}
         />
         <input
           type="submit"

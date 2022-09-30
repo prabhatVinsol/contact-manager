@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Contact from './Contact';
 import ContactForm from './ContactForm';
 import Search from './Search';
+import ContactList from './contactList';
 
 function ContactManager() {
   const [contactList, updateContactList] = useState([]);
@@ -32,13 +32,7 @@ function ContactManager() {
         <ContactForm addContact={addContact} />
       </div>
       <div className="ContactList">
-        {getContactListToRender().map((contact) => (
-          <Contact
-            key={contact.id}
-            contact={contact}
-            removeContact={removeContact}
-          />
-        ))}
+        <ContactList contacts={getContactListToRender()} removeContact={removeContact} />
       </div>
     </div>
   );
