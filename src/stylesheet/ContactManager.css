@@ -1,0 +1,70 @@
+.SubmitButton{
+    background-color: #67AD5C;
+    color: white;
+    border: 0px;
+    padding: 10px 20px;
+    border-radius: 2px;
+    margin-top: 20px;
+    font-size: medium;
+    font-weight: bold;
+}
+.ContactList{
+    width: 90%;
+    height: 400px;
+    padding: 10px;
+    overflow-y: scroll;
+    margin: 10px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+.ContactManager {
+    width: 100%;
+    height: 100%;
+}
+.FormContainer{
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    background-color: lightgrey;
+    margin: 10px 20px;
+    text-align: left;
+}
+.InputContainer{
+    margin-top: 20px;
+}
+.Contact{
+    height: 380px;
+    border: 2px solid;
+    border-color: coral;
+    text-align: left;
+}
+.ContactImage{
+    width: 100%;
+    height: 75%;
+    background-color: antiquewhite;
+}
+.Remove{
+    padding: 10px 20px;
+    border: 0px;
+    border-radius: 2px;
+    background-color: cadetblue;
+    color: rgb(178, 39, 17);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ContactName{
+    margin-left: 20px;
+}
+.p{
+    color: red;
+}
+.Search {
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    overflow-y: scroll;
+    margin: 10px 20px;
+    background-color: #e9e8fd;
+    text-align: left;
+}

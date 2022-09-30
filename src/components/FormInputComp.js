@@ -1,14 +1,30 @@
 import React from 'react';
 
 function FormInputComp(props) {
-  const { fieldName, fieldValue } = props;
-  const handleInputChange = () => {
-
+  const {
+    field, value, handleChange, isEmptyError,
+  } = props;
+  const handleInputChange = (e) => {
+    handleChange(field, e.target.value);
   };
   return (
-    <div>
-      {fieldName}
-      <input type="text" placeholder={`Your ${fieldName}`} value={fieldValue} onChange={handleInputChange} />
+    <div className="InputContainer">
+      <div>{field}</div>
+      <div>
+        <input
+          type="text"
+          placeholder={`Your ${field}`}
+          value={value}
+          onChange={handleInputChange}
+        />
+        {isEmptyError && (
+          <p className="p">
+            {field}
+            {' '}
+            {value === '' ? 'is empty.' : 'is invalid.'}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

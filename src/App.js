@@ -1,9 +1,10 @@
+import ContactManager from './components/ContactManager';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      Contact Manager
+      <ContactManager />
     </div>
   );
 }
